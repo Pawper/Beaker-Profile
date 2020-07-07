@@ -1,0 +1,77 @@
+/* Hi Beaker community! Please enjoy my web design tips! -Pawper */
+
+/* Your main CSS file should be mobile-first. Seperate CSS files by media queries! */
+
+/* This file is for devices of tablet size (min-width: 601px) or larger! Includes desktop. */
+
+body {
+  place-content: center; /* because I want my content centered - requires display: grid */
+}
+
+.btn {
+  transition: transform 200ms;
+}
+.btn:hover {
+  transform: scale(1.1);
+}
+
+.container {
+  grid: 
+    /* we can do multiple columns by separating names with spaces */
+    /* we can span multiple rows/columns using the same name */
+    'main profile'
+    'main splat-scheme-switch'
+    'main .' /* the period allows main to continue past the end of the other stuff */
+    / 1fr 28rem; /* this line contains our column widths; I'm using fr for fractions so both sides are 1fr of 2fr total (1/2) */
+  gap: 2rem;
+  max-width: 90rem;
+}
+
+/* Next is the profile area containing my photo, name, etc. */
+.profile {
+  /* I'd recommend using flex for this screen size EXCEPT gap isn't yet supported & you have to hack margins...  */
+  grid: 
+    'photo' 25.8rem /* Gotta put in the width to make it square because aspect-ratio isn't supported yet... */
+    'name'
+    'links'
+    'about'
+    'add';
+  gap: 1rem; /* this is why I use grid all the time nowadays... */
+  justify-items: center; /* Aligns things to the middle of the grid flow axis */
+  text-align: center;
+  border-radius: .5rem;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+}
+.profile .photo {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 50%; /* this will make our square profile pic compeltely round */
+}
+.profile .name {
+  border-radius: .5rem;
+  justify-self: stretch; /* exception to justify-items */
+}
+.profile .links {
+  width: 85%;
+  padding: 0 0 1rem 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  justify-content: center;
+}
+.profile .about {
+  padding: 0 1rem;
+}
+.profile .add {
+  justify-self: stretch;
+  margin: 0 -1rem -1rem -1rem; /* this is to counteract the padding of the parent container*/
+  text-align: center;
+  padding: 1rem;
+}
+.profile .add:hover {
+  border-width: 2px;
+  margin-top: -4px; /* we have to negate the added borders because they'll cause the height to increase & stuff moves */
+  border-style: solid;
+  border-radius: .5rem;
+}

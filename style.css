@@ -1,0 +1,206 @@
+/* Hi Beaker community! Please enjoy my web design tips! -Pawper */
+
+/* Your main CSS file should be mobile-first. Seperate CSS files by media queries! */
+
+/* Import your site-wide font(s) first */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+:root {
+  font-size: calc(100% * calc(10/16)); /* Default font size is 16px but 1rem = 10px (instead of 16px) is easier to math out in your head; must use % calculation because defining with px breaks accessibility (users can set font size in browser prefs) */
+}
+
+html {
+  box-sizing: border-box; /* 100% height/width includes borders so they won't overflow */
+  padding: .5rem 0; /* we want some padding on the top and bottom - but not sides or it'll overflow causing scrollbars */
+  overflow-x: hidden; /* scrollbars are so annoying, this doesn't work all the time anyway */
+}
+*, *::before, *::after {
+  box-sizing: inherit; /* inherit from html */
+  margin: 0; /* Margin reset - best enter margins manually */
+  padding: 0; /* Padding reset - best enter padding manually */
+}
+
+body {
+  font-family: 'Ubuntu', sans-serif; /* imported above; alwasy have a fallback to sans-serif or serif */
+  font-size: 1.6rem; /* Equivalent to general default of 16px. Use rem units so zoom works for folx */
+  line-height: 1.5em; /* A very readable line-height - use ems */
+  padding: 
+    env(safe-area-inset-top)
+    env(safe-area-inset-right)
+    env(safe-area-inset-bottom)
+    env(safe-area-inset-left); /* This padding is for notches */
+  display: grid; /* because I want my content centered - required for place-content property */
+  min-height: 95vh; /* because I want my content centered; has to be min-height or content gets cut off */
+}
+
+/* The below rule is good if you are using grids. Your images will fill the space and not stretch or squish. */
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Next I'm just cleaning up buttons with a utility class. Buttons don't inherit stuff like font */
+.btn {
+  display: block;
+  padding: 1rem 2rem;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0.5rem;
+  /* Note: I'm not using the border or border-color properties because I use Splat and they'll fight over it */
+  text-align: center;
+  cursor: pointer;
+  font-family: inherit; /* Buttons don't inherit fonts by default */
+  font-size: 1.6rem;
+  line-height: 1.5em; /* A very readable line-height - use ems */
+}
+
+/* If we use CSS Grid named areas to do our layout, we have to name the grid areas; I find it best to do it upfront */
+.profile { grid-area: profile; }
+/* Note: grid-area: splat-scheme-switch is in splat.css */
+main { grid-area: main; }
+.container {
+  display: grid; /* We're going to use this display type to arrange our elements into a layout */
+  grid: /* use this property to do the arrangin; note the elements have to be direct chilren of the .container element */
+    'profile' /* profile section name */
+    'splat-scheme-switch' /* button for Splat scheme switching */
+    'main' /* main content (microblog) */ ;
+  gap: 1rem; /* Adds a nice gap between items */
+  align-content: start;
+  padding: 1rem;
+}
+
+/* Next is the profile area containing my photo, name, etc. */
+.profile { display: grid; }
+.profile .photo { grid-area: photo; }
+.profile .name { grid-area: name; }
+.profile .links { grid-area: links; }
+.profile .about { grid-area: about; }
+.profile .add { grid-area: add; }
+.profile {
+  grid: 
+    'photo name'
+    'photo links'
+    'photo about'
+    'photo add'
+    / minmax(6.5rem, 12rem) minmax(max-content, 1fr);
+    /* Photo: minimum 6.5rem (small phones), maximum 12rem (makes square);
+       Others: at minimum we want to maximize the content (no wrapping), otherwise take up all the rest of the space */
+  border-width: 1px;
+  border-style: solid;
+  border-radius: .5rem;
+    background: repeating-linear-gradient(
+  -55deg,
+  hsl(var(--h-triadic2),var(--s-primary),var(--lightness)),
+  hsl(var(--h-triadic2),var(--s-primary),var(--lightness)) 2px,
+  hsl(var(--h-primary),var(--s-primary),var(--lightness)) 2px,
+  hsl(var(--h-primary),var(--s-primary),var(--lightness)) 4px
+);
+}
+.profile .photo {
+  /* I was going to put a right border on the pic but color theory stuff makes it real weird with the orange button */
+  border-top-left-radius: .4rem;
+  border-bottom-left-radius: .4rem;
+  aspect-ratio: 1 / 1; /* This doesn't work yet, but someday! https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio */
+}
+.profile .name {
+  padding: 1rem;
+  padding-bottom: .5rem;
+  border-top-right-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+  font-size: 1.25rem;
+}
+.profile .name h1 {
+  font-size: 2.5rem;
+}
+.profile .links {
+  font-size: 1.25rem;
+  padding-left: 1rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min-content;
+  gap: .5rem;
+  padding: .5rem 1rem;
+}
+.profile .links a {
+  color: hsl(var(--h-primary),var(--s-primary),var(--lightness-half));
+  font-size: 3rem;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: .5rem;
+  padding: .5rem;
+  transition: transform 200ms;
+  will-change: transform; /* Fixes text jitter in transition */
+  backface-visibility: hidden; /* Fixes text jitter in transition */
+}
+.profile .links a:hover {
+  color: hsl(var(--h-primary),var(--s-primary),var(--lightness-invert));
+  transform: scale(1.1);
+}
+.profile .about {
+  padding: 0 1rem .5rem 1rem;
+}
+.profile .add {
+  border-width: 0;
+  border-radius: 0;
+  border-bottom-right-radius: .3rem;
+  padding: 0 1rem;
+  text-align: start;
+  font-weight: 700; /* Bold weight that we imported at top */
+}
+
+main {
+  padding: 1rem;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0.5rem;
+  grid-area: main;
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+pfrazee-microblog {
+  display: grid;
+}
+
+pfrazee-microblog .meta {
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: 1.25rem;
+}
+pfrazee-microblog .meta a {
+  color: hsl(var(--h-primary),var(--s-primary),var(--lightness-half)); /* variables are from Splat */
+  display: block;
+  margin-left: 1rem;
+}
+pfrazee-microblog .meta a:hover {
+  color: hsl(var(--h-primary),var(--s-primary),var(--lightness-invert));
+}
+pfrazee-microblog > .content {
+}
+pfrazee-microblog .content > .content {
+  border-radius: .5rem;;
+  background: hsl(var(--h-complementary),var(--s-primary),var(--lightness));
+  padding: 2rem;
+}
+pfrazee-microblog .content > .content code {
+  display: block;
+  white-space: pre-line;
+  border-radius: .3rem;;
+  background: hsl(var(--h-complementary),var(--s-tertiary),var(--lightness));
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+  box-shadow: inset 0 0 .5rem hsl(var(--h-primary),var(--s-primary),var(--lightness-half));
+  background: repeating-linear-gradient(
+  -55deg,
+  hsl(var(--h-complementary),var(--s-primary),var(--lightness)),
+  hsl(var(--h-complementary),var(--s-primary),var(--lightness)) 1px,
+  hsl(var(--h-triadic2),var(--s-primary),var(--lightness)) 1px,
+  hsl(var(--h-triadic2),var(--s-primary),var(--lightness)) 2px
+);
+}
+
+pfrazee-microblog .content > .content p:not(:last-child) {
+  padding-bottom: 1rem;
+}

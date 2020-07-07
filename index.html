@@ -1,0 +1,74 @@
+<!-- Hi Beaker community! Please enjoy my web design tips! -Pawper -->
+<!-- If your indents are messy, you can "prettify" by using Alt Shift F -->
+
+<!doctype html>
+<html lang="en">
+<!-- lang attribute helps search engines return language specific results, and it is also used by screen readers that switch language profiles to provide the correct accent and pronunciation. Also used for hyphenation via CSS -->
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Required for mobile devices -->
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<!-- Every site should have a title. For screen readers' sake, use • (Alt 7 on your numpad) as a separater. -->
+	<title>Phillip Wessels • San Jose, CA</title>
+
+	<link rel="icon" type="image/png" sizes="32x32" href="/thumb">
+
+	<!-- First I'm linking to my Font Awesome CDN -->
+	<script src="https://kit.fontawesome.com/edb600a6e3.js" crossorigin="anonymous">
+
+	</script>
+	<!-- Next I'm linking the css file for Splat, a library I wrote for color theming. -->
+	<link rel="stylesheet" type="text/css" href="splat.css">
+	<style>
+		:root {
+			--h-primary: 348;
+			/* Splat - Change this to your favorite hue; that's it */
+		}
+	</style>
+	<!-- Below I'm linking my main mobile-first CSS file. Your CSS files should go AFTER CDNs/libraries due to specificity -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<!-- Finally I'm linking a CSS file with a media query so it only downloads when the viewport matches. -->
+	<link rel="stylesheet" type="text/css" href="tablets-plus.css" media="screen and (min-width: 601px)">
+
+</head>
+
+<body class="bg-h-triadic2-s-tertiary txt-h-triadic2-s-primary-invert">
+
+	<div class="container">
+
+		<!-- Splat switch has to be before all other elements in source order -->
+		<!-- Splat.css Scheme Switch start -->
+		<!-- <input id="splat-scheme-switch__toggler" class="splat-scheme-switch__toggler" type="checkbox" aria-hidden="true"></input>
+      <label class="splat-scheme-switch__button btn bg-h-triadic2-s-tertiary" for="splat-scheme-switch__toggler" aria-hidden="true"></label>
+      <div class="splat-scheme-switch__filter"></div> -->
+      <!-- Splat.css Scheme Switch end -->
+
+      <!-- Ugly class names below are for Splat -->
+      <section class="profile bd-h-primary-s-primary-half bg-h-primary-s-primary">
+        <img src="/thumb" class="photo bd-h-triadic2-s-primary-half" alt="">
+        <div class="name bg-h-complementary-s-primary"><h1>Phillip Wessels</h1>@pawper</div>
+        <span class="links bd-h-triadic2-s-primary-half"><a href="https://github.com/Pawper" target="_blank" title="GitHub"><i class="fab fa-github"></i></a> <a href="https://twitter.com/pawper" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></span>
+        <div class="about bd-h-triadic2-s-primary-half"><span class="emoji" aria-label="Queer coder, gamer, RPG designer and artist" title="Queer coder, gamer, RPG designer and artist">🏳‍🌈👨‍💻🎮🎲🎨</span> • San Jose, CA</div>
+        <button class="add btn bd-h-triadic2-s-primary-half bg-h-primary-s-primary-half" id="addContact">Add to Address Book</button>
+        <!-- Adding btn class to the above because I'm making a utility class to override button CSS junk in general -->
+      </section>
+
+      <main class="bd-h-triadic2-s-primary-half bg-h-triadic2-s-primary">
+        <h2>Microblog</h2>
+        <pfrazee-microblog></pfrazee-microblog>
+      </main>
+
+    </div>  
+  
+  </body>
+  
+  <script type="module" src="/vendor/pauls-ui-kit/microblog.js"></script>
+  <script>
+    addContact.onclick = function () {
+      beaker.contacts.requestAddContact(location.toString())
+    }
+  </script>
+</html>
